@@ -18,6 +18,5 @@ public interface PokemonService {
 	List<Pokemon>getFavouritePokemons();
 	List<Pokemon>searchBySpeciesAndType(PokemonSearchParams pokemonSearchParams);
 	Pokemon getPokemonById(int id);
-	Pokemon updatePokemon(int id);	
-	
+	Pokemon updatePokemon(int id);		
 }

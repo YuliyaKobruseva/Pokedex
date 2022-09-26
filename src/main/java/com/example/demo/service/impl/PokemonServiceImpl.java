@@ -3,7 +3,9 @@
  */
 package com.example.demo.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
@@ -39,9 +41,21 @@ public class PokemonServiceImpl implements PokemonService{
 
 	@Override
 	public Pokemon getPokemonById(int id) {
-		return pokemonRepository.findById(id).orElseThrow(() -> 
-		new ResourceNotFoundException("Pokemon", "Id", id));
+
+		Pokemon existPokemon;
+		Pokemon result = pokemonRepository.findById(id).get();
+		existPokemon = result;
 		
+		List<Pokemon> pokemonEvolutions = new ArrayList<>();		
+		
+		while(result.getEvolution() > 0) {
+			result = pokemonRepository.findById(result.getEvolution()).get();
+			pokemonEvolutions.add(result);
+		}
+
+		existPokemon.setEvolutions(pokemonEvolutions);
+		
+		return existPokemon;
 	}
 
 	@Override
@@ -83,5 +97,11 @@ public class PokemonServiceImpl implements PokemonService{
 			throw new ResourceNotFoundException("Pokemon", "Id", id);
 		}
 			
+	}
+
+	
+	private Pokemon getEvolutions(int id) {
+		
+		return pokemonRepository.findById(id).get();
 	}
 }

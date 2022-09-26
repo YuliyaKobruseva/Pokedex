@@ -3,9 +3,11 @@
  */
 package com.example.demo.model;
 
+import java.util.List;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,6 +15,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+
+import org.springframework.data.annotation.Transient;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import javax.persistence.JoinColumn;
 
 
@@ -64,6 +71,11 @@ public class Pokemon {
     
     @Column(name = "evolution", nullable = true)
 	private int evolution;
+    
+    @JsonInclude()
+    @Transient
+    @ElementCollection
+    private List<Pokemon> evolutions;
 
 	/**
 	 * @return the id
@@ -217,6 +229,20 @@ public class Pokemon {
 	 */
 	public void setEvolution(int evolution) {
 		this.evolution = evolution;
-	}	
-	
+	}
+
+	/**
+	 * @return the evolutions
+	 */
+	public List<Pokemon> getEvolutions() {
+		return evolutions;
+	}
+
+	/**
+	 * @param evolutions the evolutions to set
+	 */
+	public void setEvolutions(List<Pokemon> evolutions) {
+		this.evolutions = evolutions;
+	}
+
 }
