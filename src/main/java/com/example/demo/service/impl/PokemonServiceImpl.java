@@ -99,9 +99,4 @@ public class PokemonServiceImpl implements PokemonService{
 			
 	}
 
-	
-	private Pokemon getEvolutions(int id) {
-		
-		return pokemonRepository.findById(id).get();
-	}
 }
